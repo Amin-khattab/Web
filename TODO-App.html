@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Todo App</title>
+    <style>
+        body {
+            background-color: #f4f6fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: #222;
+            margin: 0;
+            height: 100vh;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            max-width: 500px;
+            border-radius: 10px;
+            padding: 75px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-input {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .input {
+            background-color: #f7f9fc;
+            border-radius: 5px;
+            height: 35px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .input:focus {
+            border-color: #4f8cff;
+            outline: none;
+        }
+
+        .text {
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #4f8cff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 1s;
+        }
+
+        .text:hover {
+            background-color: #222;
+        }
+
+        .todo {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f7f9fc;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            color: #222;
+        }
+
+        .p_button {
+            display: flex;
+            padding: 4px;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .re_button {
+            padding: 5px 10px;
+            background-color: #ff6a6a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 1s;
+        }
+
+        .comp-button {
+            display: block;
+            padding: 5px 10px;
+            background-color: #26d715;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 1s;
+        }
+
+        .re_button:hover {
+            background-color: #000000;
+        }
+
+        .comp-button:hover {
+            background-color: #000000;
+        }
+
+        .complete-text {
+            margin-bottom: 10px;
+            color: #222;
+            font-weight: bold;
+            font-size: 1.25rem;
+
+        }
+
+        .complete {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .todo:empty {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main">
+
+        <section class="Top">
+            <h1 style="color: black;">To Do App</h1>
+        </section>
+
+        <section class="task-input">
+
+            <input type="text" placeholder="add a task" class="input">
+            <button class="text">add task</button>
+
+        </section>
+
+        <section class="todo">
+            <p>
+                todo
+            </p>
+        </section>
+
+        <section class="complete">
+
+            <p>
+                completed
+            </p>
+
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const addButton = document.querySelector(".text")
+            const inputField = document.querySelector(".input")
+            const section = document.querySelector(".todo")
+            const complete = document.querySelector(".complete")
+
+            const completed = []
+            const todo = []
+
+            addButton.addEventListener("click", () => {
+
+                const newText = inputField.value.trim()
+
+                if (newText) {
+
+                    const newTask = document.createElement("div")
+                    newTask.textContent = newText
+                    newTask.classList.add("box")
+
+                    let p_button = document.createElement("div")
+                    p_button.classList.add("p_button")
+
+                    let complete_text = document.createElement("div")
+                    complete_text.textContent = "Completed"
+                    complete_text.classList.add("complete-text")
+
+                    const removebutton = document.createElement("button")
+                    removebutton.textContent = "remove"
+                    removebutton.classList.add("re_button")
+
+                    const complete_button = document.createElement("button")
+                    complete_button.textContent = "Completed"
+                    complete_button.classList.add("comp-button")
+
+
+
+                    p_button.appendChild(complete_button)
+                    p_button.appendChild(removebutton)
+
+
+                    newTask.appendChild(p_button)
+                    section.appendChild(newTask)
+
+
+                    removebutton.addEventListener("click", () => {
+                        newTask.remove()
+                    })
+
+                    complete_button.addEventListener("click", () => {
+                        complete.appendChild(newTask)
+                    })
+
+
+                    inputField.value = ""
+
+
+                } else {
+                    alert("please write down a task name.")
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
