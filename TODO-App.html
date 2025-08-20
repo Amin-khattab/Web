@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-
     <title>Todo App</title>
     <style>
         body {
@@ -15,6 +14,7 @@
             color: #222;
             margin: 0;
             height: 100vh;
+            position: relative;
         }
 
         .main {
@@ -142,6 +142,25 @@
         .todo:empty {
             display: none;
         }
+
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #4f8cff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 1s;
+        }
+
+        .logout:hover {
+            background-color: #ff0000;
+        }
     </style>
 </head>
 
@@ -160,114 +179,113 @@
         </section>
 
         <section class="todo">
-            <p>
-                todo
-            </p>
+
+            <h3>Todo</h3>
+
         </section>
 
         <section class="complete">
 
-            <p>
-                completed
-            </p>
+            <h3>Completed</h3>
+
+        </section>
 
         </section>
 
     </main>
 
     <script>
-        
-function example(count, section) {
-    if (count === 0) {
-        section.style.visibility = "hidden"
-    } else {
-        section.style.visibility = "visible"
-    }
-}
+        function example(count, section) {
+            if (count === 0) {
+                section.style.visibility = "hidden"
+            } else {
+                section.style.visibility = "visible"
+            }
+        }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const addButton = document.querySelector(".text")
-    const inputField = document.querySelector(".input")
-    const section = document.querySelector(".todo")
-    const complete = document.querySelector(".complete")
+        document.addEventListener("DOMContentLoaded", () => {
+            const addButton = document.querySelector(".text")
+            const inputField = document.querySelector(".input")
+            const section = document.querySelector(".todo")
+            const complete = document.querySelector(".complete")
 
-    let completed = 0
-    let todo = 0
-
-    example(todo, section)
-    example(completed, complete)
-    addButton.addEventListener("click", () => {
-
-        const newText = inputField.value.trim()
-
-        if (newText) {
-
-            const newTask = document.createElement("div")
-            newTask.textContent = newText
-            newTask.classList.add("box")
-
-            let p_button = document.createElement("div")
-            p_button.classList.add("p_button")
-
-            let complete_text = document.createElement("div")
-            complete_text.textContent = "Completed"
-            complete_text.classList.add("complete-text")
-
-            const removebutton = document.createElement("button")
-            removebutton.textContent = "remove"
-            removebutton.classList.add("re_button")
-
-            const complete_button = document.createElement("button")
-            complete_button.textContent = "Completed"
-            complete_button.classList.add("comp-button")
-
-
-
-            p_button.appendChild(complete_button)
-            p_button.appendChild(removebutton)
-            newTask.appendChild(p_button)
-            section.appendChild(newTask)
-            todo = todo + 1
-
+            let completed = 0
+            let todo = 0
 
             example(todo, section)
             example(completed, complete)
+            addButton.addEventListener("click", () => {
 
-            removebutton.addEventListener("click", () => {
+                const newText = inputField.value.trim()
+
+                if (newText) {
+
+                    const newTask = document.createElement("div")
+                    newTask.textContent = newText
+                    newTask.classList.add("box")
+
+                    let p_button = document.createElement("div")
+                    p_button.classList.add("p_button")
+
+                    let complete_text = document.createElement("div")
+                    complete_text.textContent = "Completed"
+                    complete_text.classList.add("complete-text")
+
+                    const removebutton = document.createElement("button")
+                    removebutton.textContent = "remove"
+                    removebutton.classList.add("re_button")
+
+                    const complete_button = document.createElement("button")
+                    complete_button.textContent = "Completed"
+                    complete_button.classList.add("comp-button")
 
 
-                if (complete.contains(newTask)) {
-                    completed = completed - 1
-                    example(completed, complete)
-                } else {
-                    todo = todo - 1
+
+                    p_button.appendChild(complete_button)
+                    p_button.appendChild(removebutton)
+                    newTask.appendChild(p_button)
+                    section.appendChild(newTask)
+                    todo = todo + 1
+
+
                     example(todo, section)
+                    example(completed, complete)
+
+                    removebutton.addEventListener("click", () => {
+
+
+                        if (complete.contains(newTask)) {
+                            completed = completed - 1
+                            example(completed, complete)
+                        } else {
+                            todo = todo - 1
+                            example(todo, section)
+                        }
+
+                        newTask.remove()
+
+                    })
+
+                    complete_button.addEventListener("click", () => {
+                        complete_button.remove()
+                        todo = todo - 1
+                        complete.appendChild(newTask)
+                        completed = completed + 1
+
+                        example(todo, section)
+                        example(completed, complete)
+
+                    })
+
+
+                    inputField.value = ""
+
+
+                } else {
+                    alert("please write down a task name.")
                 }
-
-                newTask.remove()
-
             })
-
-            complete_button.addEventListener("click", () => {
-                complete_button.remove()
-                todo = todo - 1
-                complete.appendChild(newTask)
-                completed = completed + 1
-
-                example(todo, section)
-                example(completed, complete)
-
-            })
-
-
-            inputField.value = ""
-
-
-        } else {
-            alert("please write down a task name.")
-        }
-    })
-})
+        })
     </script>
 </body>
 
